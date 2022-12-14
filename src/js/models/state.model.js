@@ -1,15 +1,16 @@
 export class StateModel {
-    refreshState = {
-        restart: false,
-        reset: false,
+    condition = {
+        restarted: false,
+        reseted: false,
+        purchased: false
     };
-    numbersState = {
+    numbers = {
         lastNumbers: [],
         lastBonusNumber: [],
         numberSet: [],
         numberSetManuel: []
     };
-    purchasedState = {
+    purchased = {
         price: 0,
         purchasedUnit: 0
     };
@@ -24,16 +25,23 @@ export class StateModel {
     }
 
     resetState() {
-        ['restart', 'reset'].forEach(prop => {
-            this.#setState(this.refreshState, prop, false);
-        });
+        const states = [
+            {
+                state: this.condition,
+                value: false
+            },
+            {
+                state: this.numbers,
+                value: []
+            },
+            {
+                state: this.purchased,
+                value: 0
+            },
+        ];
 
-        ['lastNumbers', 'lastBonusNumber', 'numberSet', 'numberSetManuel'].forEach(prop => {
-            this.#setState(this.numbersState, prop, []);
-        });
-
-        ['price', 'purchasedUnit'].forEach(prop => {
-            this.#setState(this.purchasedState, prop, 0);
+        states.forEach(({ state, value }) => {
+            Object.keys(state).forEach(prop => this.#setState(state, prop, value));
         });
     }
 
@@ -56,16 +64,16 @@ export class StateModel {
         }
     }
 
-    setRefreshState(prop, value) {
-        this.#setState(this.refreshState, prop, value);
+    setConditionState(prop, value) {
+        this.#setState(this.condition, prop, value);
     }
 
     setNumbersState(prop, value) {
-        this.#setState(this.numbersState, prop, value);
+        this.#setState(this.numbers, prop, value);
     }
 
     setPurchasedState(prop, value) {
-        this.#setState(this.purchasedState, prop, value);
+        this.#setState(this.purchased, prop, value);
     }
 
     #notify(key, value) {

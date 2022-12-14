@@ -27,8 +27,8 @@ export class StatsComponent extends Component {
     }
 
     _subscribe() {
-        this._stateModel.register({ restart: () => this._restart() });
-        this._stateModel.register({ reset: () => this._reset() });
+        this._stateModel.register({ restarted: () => this._restart() });
+        this._stateModel.register({ reseted: () => this._reset() });
     }
 
     _initElement() {

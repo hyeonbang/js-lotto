@@ -13,10 +13,10 @@ export class ModalComponent extends Component {
 
     constructor(container) {
         super(container);
-        this.numberSet = this._stateModel.numbersState.numberSet;
-        this.lastNumbers = this._stateModel.numbersState.lastNumbers;
-        this.lastBonusNumber = this._stateModel.numbersState.lastBonusNumber;
-        this.price = this._stateModel.purchasedState.price;
+        this.numberSet = this._stateModel.numbers.numberSet;
+        this.lastNumbers = this._stateModel.numbers.lastNumbers;
+        this.lastBonusNumber = this._stateModel.numbers.lastBonusNumber;
+        this.price = this._stateModel.purchased.price;
         this.#winStats = arrDeepCopy(WINSTATS);
         this.#rateOfReturn = 0;
         this.init();
@@ -35,7 +35,7 @@ export class ModalComponent extends Component {
     }
 
     _restart() {
-        this._stateModel.setRefreshState('restart', true);
+        this._stateModel.setConditionState('restarted', true);
         this.#closeStatsModal();
         this._reset();
         this._stateModel.reset();

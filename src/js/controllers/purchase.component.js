@@ -34,8 +34,8 @@ export class purchaseComponent extends Component {
     }
 
     _subscribe() {
-        this._stateModel.register({ restart: () => this._restart() });
-        this._stateModel.register({ reset: () => this._reset() });
+        this._stateModel.register({ restarted: () => this._restart() });
+        this._stateModel.register({ reseted: () => this._reset() });
     }
 
     _initElement() {
@@ -54,7 +54,7 @@ export class purchaseComponent extends Component {
         this._view.displayNone([$purchasedManuel.lotto, $stats.lotto]);
         [...$purchasedManuel.numbers].forEach($number => this._view.setInputValue($number));
         this.#initNumbersValue();
-        this._stateModel.setPurchasedState('purchased', false);
+        this._stateModel.setConditionState('purchased', false);
 
         this._view.disableButton([
             $purchasedManuel.button,
@@ -75,7 +75,7 @@ export class purchaseComponent extends Component {
 
     renderManuelLotto() {
         if (!this.#isInputChange) return;
-        this._stateModel.setRefreshState('reset', true);
+        this._stateModel.setConditionState('reseted', true);
 
         const params = {
             sectionType: SECTIONTYPE.PURCHASE,
@@ -91,8 +91,8 @@ export class purchaseComponent extends Component {
     }
 
     purchase() {
-        if (this._stateModel.purchasedState.purchased || !this.#isValidated()) return;
-        this._stateModel.setPurchasedState('purchased', true);
+        if (this._stateModel.condition.purchased || !this.#isValidated()) return;
+        this._stateModel.setConditionState('purchased', true);
         if (this.#hasNumberSetManuel()) {
             this._stateModel.setNumbersState('numberSetManuel', this.numberSetManuel);
         }
